@@ -44,9 +44,6 @@ export async function POST(req: NextRequest) {
     let watermarkBuffer: Buffer | undefined;
     if (type === "image" && watermarkFile) {
       watermarkBuffer = Buffer.from(await watermarkFile.arrayBuffer());
-      console.log("[API /watermark] watermarkBuffer length:", watermarkBuffer.length, "type:", typeof watermarkFile, "name:", watermarkFile.name);
-      const fs = require('fs');
-      fs.appendFileSync('watermark-error.log', `[API /watermark] watermarkBuffer length: ${watermarkBuffer.length}\n`);
     }
 
     let outputBuffer: Buffer;
@@ -87,8 +84,6 @@ export async function POST(req: NextRequest) {
       },
     });
   } catch (err) {
-    const fs = require('fs');
-    fs.appendFileSync('watermark-error.log', err.stack + "\n");
     console.error("[API /watermark]", err);
     if (inputFileId) deleteFile(inputFileId).catch(() => {});
     return NextResponse.json({ error: "Watermark failed" }, { status: 500 });
