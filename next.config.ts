@@ -1,7 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  // Sharp uses native binaries — must be excluded from bundling on Vercel
+  serverExternalPackages: ["sharp", "@imgly/background-removal-node"],
   images: {
     remotePatterns: [
       {
