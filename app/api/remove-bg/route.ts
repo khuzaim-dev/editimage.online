@@ -9,7 +9,7 @@ import { removeBackground } from "@imgly/background-removal-node";
  * This uses a state-of-the-art ONNX model to accurately separate the subject from the background.
  */
 async function removeBackgroundImgly(input: Buffer, refineEdges: boolean): Promise<Buffer> {
-  const blob = new Blob([input], { type: "image/png" });
+  const blob = new Blob([new Uint8Array(input)], { type: "image/png" });
   
   // Note: the model automatically downloads on first run and caches locally.
   const resultBlob = await removeBackground(blob);
